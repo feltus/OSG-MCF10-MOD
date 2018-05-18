@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -e
+
+HNAME=`hostname -f`
+if [ "x$HNAME" != "xlogin03.osgconnect.net" ]; then
+    echo "This workflow has to be submitted from login03.osgconnect.net"
+    exit 1
+fi
+
+# needed for stashcp to be picked up the site catalog for the local site
+#module load stashcp
+export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/stashcp/writeback:$PATH
+
+#module load pegasus
+export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/pegasus/rhel7/4.9.0dev/bin:$PATH
+
+TOPDIR=`pwd`
+
+export RUN_ID=osg-mcf10-mod-`date +'%s'`
+export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
+mkdir -p $RUN_DIR
+
+COMPUTE_SITE="osg-condorpool"
+STAGING_SITE="osg-stash"
+
+# tar up the model code
+(cd Mechanistic_Pan-Cancer_Model && tar czf $RUN_DIR/Mechanistic_Pan-Cancer_Model.tar.gz .)
+
+envsubst < "sites.xml.template" > "sites.xml"
+
+# generate the dax
+export PYTHONPATH=`pegasus-config --python`
+./tools/dax-generator $RUN_ID $RUN_DIR
+
+pegasus-plan \
+    --conf pegasus.conf \
+    --cluster horizontal \
+    --relative-dir $RUN_ID \
+    --sites $COMPUTE_SITE \
+    --staging-site $STAGING_SITE \
+    --output-site local \
+    --dir $RUN_DIR \
+    --dax dax.xml \
+    --submit
+
+
+

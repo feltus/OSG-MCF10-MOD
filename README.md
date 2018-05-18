@@ -1,1 +1,7 @@
-# OSG-MCF10-MOD
+
+Submit from login03.osgconnect.net
+
+Mechanistic_Pan-Cancer_Model is a subrepo
+
+
+

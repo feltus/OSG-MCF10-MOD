@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+from __future__ import division
+
+from Pegasus.DAX3 import *
+import sys
+import math
+import os
+import re
+import subprocess
+import ConfigParser
+
+
+base_dir = os.getcwd()
+
+run_id = sys.argv[1]
+run_dir = sys.argv[2]    
+
+# Create a abstract dag
+dax = ADAG('osg-mcf10-mod')
+
+# email notificiations for when the state of the workflow changes
+dax.invoke('all',  base_dir + '/tools/email-notify')
+
+# Add executables to the DAX-level replica catalog
+for exe_name in os.listdir('./tools/'):
+    exe = Executable(name=exe_name, arch='x86_64', installed=False)
+    exe.addPFN(PFN('file://' + base_dir + '/tools/' + exe_name, 'local'))
+    dax.addExecutable(exe)
+
+tarball = File('Mechanistic_Pan-Cancer_Model.tar.gz')
+tarball.addPFN(PFN(run_dir + '/Mechanistic_Pan-Cancer_Model.tar.gz', 'local'))
+dax.addFile(tarball)
+
+# add jobs for job index
+for i in range (0, 10):
+    job = Job(name='test2-wrapper')
+    job.addArguments(str(i))
+
+    job.uses(tarball, link=Link.INPUT)
+
+    xoutS0 = File(str(i) + '-xoutS_0.csv')
+    job.uses(xoutS0, link=Link.OUTPUT, transfer=True)
+    
+    xoutG0 = File(str(i) + '-xoutG_0.csv')
+    job.uses(xoutG0, link=Link.OUTPUT, transfer=True)
+    
+    t0 = File(str(i) + '-t_0.csv')
+    job.uses(t0, link=Link.OUTPUT, transfer=True)
+
+    dax.addJob(job)
+
+# Write the DAX to stdout
+f = open('dax.xml', 'w')
+dax.writeXML(f)
+f.close()
+
+
