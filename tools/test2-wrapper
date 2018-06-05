@@ -3,9 +3,6 @@
 set -e
 
 # in case of early job failure, make sure output files exist
-touch $1-xoutS_0.csv
-touch $1-xoutG_0.csv
-touch $1-t_0.csv
 
 export PATH=/opt/conda/bin:/opt/miniconda/bin:$PATH
 
@@ -15,7 +12,25 @@ export OMP_NUM_THREADS=8
 
 python3 test2.py
 
-mv xoutS_0.csv $1-xoutS_0.csv
-mv xoutG_0.csv $1-xoutG_0.csv
-mv t_0.csv $1-t_0.csv
+echo
+echo
+echo "Model done. Current state of the the files:"
+ls -lh
+echo
+
+# rename output files
+for FILE in \
+    t_deterministic.csv \
+    t_stochastic.csv \
+    xoutG_deterministic.csv \
+    xoutG_stochastic.csv \
+    xoutS_deterministic.csv \
+    xoutS_stochastic.csv \
+; do
+    if [ ! -e $FILE ]; then
+        echo "ERROR: expected output file $FILE does not exist"
+        exit 1
+    fi
+    mv $FILE $1-$FILE
+done
 

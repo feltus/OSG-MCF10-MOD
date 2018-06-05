@@ -39,14 +39,16 @@ for i in range (0, 10):
 
     job.uses(tarball, link=Link.INPUT)
 
-    xoutS0 = File(str(i) + '-xoutS_0.csv')
-    job.uses(xoutS0, link=Link.OUTPUT, transfer=True)
-    
-    xoutG0 = File(str(i) + '-xoutG_0.csv')
-    job.uses(xoutG0, link=Link.OUTPUT, transfer=True)
-    
-    t0 = File(str(i) + '-t_0.csv')
-    job.uses(t0, link=Link.OUTPUT, transfer=True)
+    # outputs
+    for basename in [
+            't_deterministic.csv',
+            't_stochastic.csv',
+            'xoutG_deterministic.csv',
+            'xoutG_stochastic.csv',
+            'xoutS_deterministic.csv',
+            'xoutS_stochastic.csv' ]:
+        f = File(str(i) + "-" + basename)
+        job.uses(f, link=Link.OUTPUT, transfer=True)
 
     dax.addJob(job)
 
