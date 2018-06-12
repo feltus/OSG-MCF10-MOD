@@ -40,15 +40,8 @@ for i in range (0, 10):
     job.uses(tarball, link=Link.INPUT)
 
     # outputs
-    for basename in [
-            't_deterministic.csv',
-            't_stochastic.csv',
-            'xoutG_deterministic.csv',
-            'xoutG_stochastic.csv',
-            'xoutS_deterministic.csv',
-            'xoutS_stochastic.csv' ]:
-        f = File(str(i) + "-" + basename)
-        job.uses(f, link=Link.OUTPUT, transfer=True)
+    f = File(str(i) + '.tar.gz')
+    job.uses(f, link=Link.OUTPUT, transfer=True)
 
     dax.addJob(job)
 

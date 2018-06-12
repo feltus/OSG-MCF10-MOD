@@ -18,19 +18,11 @@ echo "Model done. Current state of the the files:"
 ls -lh
 echo
 
-# rename output files
-for FILE in \
-    t_deterministic.csv \
-    t_stochastic.csv \
-    xoutG_deterministic.csv \
-    xoutG_stochastic.csv \
-    xoutS_deterministic.csv \
-    xoutS_stochastic.csv \
-; do
-    if [ ! -e $FILE ]; then
-        echo "ERROR: expected output file $FILE does not exist"
-        exit 1
-    fi
+# rename the csv files so we can easily untar later
+for FILE in `ls *.csv`; do
     mv $FILE $1-$FILE
 done
+
+# output now is a tarfile with *.csv
+tar czf $1.tar.gz *.csv
 
