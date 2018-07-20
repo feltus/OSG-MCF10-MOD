@@ -34,7 +34,7 @@ dax.addFile(tarball)
 
 # add jobs for job index
 for i in range (0, 10):
-    job = Job(name='test2-wrapper')
+    job = Job(name='job-wrapper')
     job.addArguments(str(i))
 
     job.uses(tarball, link=Link.INPUT)
