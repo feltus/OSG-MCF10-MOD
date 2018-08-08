@@ -11,7 +11,7 @@ tar xzf Mechanistic_Pan-Cancer_Model.tar.gz
 export OMP_NUM_THREADS=8
 
 # This will run jobs in the jobs directory in the model dir
-cd Mechanistic_Pan-Cancer_Model/jobs
+cd Mechanistic_Pan-Cancer_Model
 python3 trail.py
 
 echo
