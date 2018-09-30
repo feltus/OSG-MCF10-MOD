@@ -11,7 +11,7 @@ tar xzf Mechanistic_Pan-Cancer_Model.tar.gz
 export OMP_NUM_THREADS=8
 
 # This will run jobs in the jobs directory in the model dir
-python3 trail.py
+python3 2B.py
 
 echo
 echo
@@ -24,6 +24,6 @@ for FILE in `ls *.csv`; do
     mv $FILE $1-$FILE
 done
 
-# output now is a tarfile with *.csv
-tar czf $1.tar.gz *.csv
+# output now is a tarfile with *.csv *.pdf
+tar czf $1.tar.gz *.csv *.pdf
 

@@ -22,12 +22,12 @@
     <site  handle="osg-condorpool" arch="x86_64" os="LINUX">
         <profile namespace="pegasus" key="style" >condor</profile>
         <profile namespace="condor" key="universe" >vanilla</profile>
-        <profile namespace="condor" key="requirements" >OSGVO_OS_STRING == "RHEL 6" &amp;&amp; Arch == "X86_64" &amp;&amp; HAS_SINGULARITY == True &amp;&amp; HAS_MODULES == True</profile>
+        <profile namespace="condor" key="requirements" >Arch == "X86_64" &amp;&amp; HAS_SINGULARITY == True &amp;&amp; HAS_MODULES == True &amp;&amp; GLIDEIN_ResourceName =!= "MWT2"</profile>
         <profile namespace="condor" key="request_cpus" >8</profile>
         <profile namespace="condor" key="request_memory" >8 GB</profile>
         <profile namespace="condor" key="request_disk" >5 GB</profile>
         <profile namespace="condor" key="+SingularityImage" >"/cvmfs/singularity.opensciencegrid.org/rynge/osg-mcf10-mod:latest"</profile>
-        <profile namespace="condor" key="+WantsStashCacheWritable" >True</profile>
+        <profile namespace="env" key="PATH" >/opt/conda/bin:/opt/miniconda/bin:/cvmfs/oasis.opensciencegrid.org/osg/modules/stashcp/5.1.2/bin:/usr/bin:/bin</profile>
     </site>
 
 </sitecatalog>
