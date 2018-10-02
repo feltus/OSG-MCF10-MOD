@@ -10,7 +10,7 @@ fi
 
 # needed for stashcp to be picked up the site catalog for the local site
 #module load stashcp
-export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/stashcp/writeback:$PATH
+export PATH=/cvmfs/oasis.opensciencegrid.org/osg/modules/stashcp/5.1.2/bin:$PATH
 
 #module load pegasus
 export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/pegasus/rhel7/4.9.0dev/bin:$PATH
