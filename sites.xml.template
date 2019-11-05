@@ -14,7 +14,7 @@
     </site>
 
     <site  handle="osg-stash" arch="x86_64" os="LINUX">
-        <directory type="shared-scratch" path="/stash2/user/${USER}/public">
+        <directory type="shared-scratch" path="/stash/user/${USER}/public">
             <file-server operation="all" url="stash:///user/${USER}/public"/>
         </directory>
     </site>
