@@ -8,10 +8,10 @@ export PATH=/opt/conda/bin:/opt/miniconda/bin:$PATH
 
 tar xzf Mechanistic_Pan-Cancer_Model.tar.gz
 
-export OMP_NUM_THREADS=8
+export OMP_NUM_THREADS=4
 
 # This will run jobs in the jobs directory in the model dir
-python3 2B.py
+python3 test.py
 
 echo
 echo
@@ -20,10 +20,16 @@ ls -lh
 echo
 
 # rename the csv files so we can easily untar later
-for FILE in `ls *.csv`; do
+FILES=""
+for FILE in `ls *.csv *.pdf 2>/dev/null`; do
     mv $FILE $1-$FILE
+    FILES="$FILES $1-$FILE"
 done
 
-# output now is a tarfile with *.csv *.pdf
-tar czf $1.tar.gz *.csv *.pdf
+echo
+echo "Taring up this result files:"
+echo "$FILES"
+
+# output now is a tarfile with the results
+tar czf $1.tar.gz $FILES
 

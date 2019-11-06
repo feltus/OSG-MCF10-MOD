@@ -22,8 +22,8 @@
     <site  handle="osg-condorpool" arch="x86_64" os="LINUX">
         <profile namespace="pegasus" key="style" >condor</profile>
         <profile namespace="condor" key="universe" >vanilla</profile>
-        <profile namespace="condor" key="requirements" >Arch == "X86_64" &amp;&amp; HAS_SINGULARITY == True &amp;&amp; HAS_MODULES == True &amp;&amp; GLIDEIN_ResourceName =!= "MWT2"</profile>
-        <profile namespace="condor" key="request_cpus" >8</profile>
+        <profile namespace="condor" key="requirements" >Arch == "X86_64" &amp;&amp; HAS_SINGULARITY == True &amp;&amp; HAS_MODULES == True &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName1 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName2 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName3 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName4</profile>
+        <profile namespace="condor" key="request_cpus" >4</profile>
         <profile namespace="condor" key="request_memory" >8 GB</profile>
         <profile namespace="condor" key="request_disk" >5 GB</profile>
         <profile namespace="condor" key="+SingularityImage" >"/cvmfs/singularity.opensciencegrid.org/rynge/osg-mcf10-mod:latest"</profile>
